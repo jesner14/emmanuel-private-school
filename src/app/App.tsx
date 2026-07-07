@@ -309,26 +309,26 @@ const T = {
 };
 
 const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=1400&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1473649085228-583485e6e4d7?w=1400&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1567057419565-4349c49d8a04?w=1400&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1637148734636-906c24feeb55?w=1400&h=900&fit=crop&auto=format",
+  "/photos/eps-28.jpg",
+  "/photos/eps-30.jpg",
+  "/photos/eps-32.jpg",
+  "/photos/eps-55.jpg",
 ];
 
 const PROGRAM_IMAGES = [
-  "https://images.unsplash.com/photo-1560130958-0ea787c275de?w=640&h=420&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1567057419565-4349c49d8a04?w=640&h=420&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1637148734636-906c24feeb55?w=640&h=420&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1633219664515-2441564d0cc4?w=640&h=420&fit=crop&auto=format",
+  "/photos/eps-01.jpg",
+  "/photos/eps-40.jpg",
+  "/photos/eps-29.jpg",
+  "/photos/eps-60.jpg",
 ];
 
 const GALLERY_IMAGES = [
-  { url: "https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=640&h=480&fit=crop&auto=format", alt: "Teacher with students" },
-  { url: "https://images.unsplash.com/photo-1473649085228-583485e6e4d7?w=640&h=480&fit=crop&auto=format", alt: "Children in classroom" },
-  { url: "https://images.unsplash.com/photo-1536337005238-94b997371b40?w=640&h=480&fit=crop&auto=format", alt: "Student with artwork" },
-  { url: "https://images.unsplash.com/photo-1633219664515-2441564d0cc4?w=640&h=480&fit=crop&auto=format", alt: "Boy writing" },
-  { url: "https://images.unsplash.com/photo-1723750592050-e973050b6ee1?w=640&h=480&fit=crop&auto=format", alt: "Child playing" },
-  { url: "https://images.unsplash.com/photo-1567057419565-4349c49d8a04?w=640&h=480&fit=crop&auto=format", alt: "Group of children" },
+  { url: "/photos/eps-20.jpg", alt: "Élèves d'Emmanuel Private School" },
+  { url: "/photos/eps-05.jpg", alt: "Enfants en pleine célébration" },
+  { url: "/photos/eps-10.jpg", alt: "Élèves avec les drapeaux du Sénégal" },
+  { url: "/photos/eps-33.jpg", alt: "Enfants aux couleurs du Sénégal" },
+  { url: "/photos/eps-48.jpg", alt: "Journée culturelle à l'école" },
+  { url: "/photos/eps-35.jpg", alt: "L'équipe pédagogique d'EPS" },
 ];
 
 const LOGO_SRC = "/logo.jpeg";
@@ -631,7 +631,7 @@ export default function App() {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="relative order-2 lg:order-1">
               <div className="relative rounded-3xl overflow-hidden shadow-xl" style={{ aspectRatio: "4/3" }}>
-                <img src="https://images.unsplash.com/photo-1473649085228-583485e6e4d7?w=800&h=600&fit=crop&auto=format" alt="Children in classroom" className="w-full h-full object-cover" />
+                <img src="/photos/eps-31.jpg" alt="Élèves en salle informatique à Emmanuel Private School" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -right-6 w-48 h-48 rounded-3xl -z-10" style={{ background: "#eef5fb" }} />
               <div className="absolute bottom-6 left-6 bg-white rounded-2xl shadow-lg px-5 py-4 border border-border">
