@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import {
   Menu, X, Phone, Mail, MapPin, ChevronRight,
-  BookOpen, Heart, Star, Users, Award, Globe,
+  BookOpen, Award, Globe,
   Baby, GraduationCap, Quote, Send, Clock,
-  FileText, Music, Calculator, Monitor, BookMarked,
-  PenLine, Sparkles
+  FileText, Music, Monitor, BookMarked,
+  PenLine, Dumbbell, Utensils, Palette, Mic, Footprints,
+  Calendar, ScrollText, Briefcase
 } from "lucide-react";
 
 type Lang = "fr" | "en";
@@ -14,9 +15,10 @@ const WHATSAPP_URL = "https://wa.me/221778790303";
 const T = {
   fr: {
     nav: {
-      home: "Accueil", about: "À propos", programs: "Programmes",
-      enrollment: "Inscriptions", activities: "Activités",
-      gallery: "Galerie", contact: "Contact", enroll: "S'inscrire",
+      about: "Notre école", enrollment: "Inscription", programs: "Programmes",
+      info: "Informations", recruitment: "Recrutement",
+      activities: "Activités extrascolaires", gallery: "Galerie", contact: "Contact",
+      enroll: "S'inscrire",
     },
     hero: {
       pre: "L'excellence éducative au cœur de Dakar",
@@ -33,60 +35,99 @@ const T = {
       ],
     },
     stats: [
-      { v: "4", l: "Niveaux scolaires" },
-      { v: "6+", l: "Matières & activités" },
+      { v: "3", l: "Niveaux scolaires" },
+      { v: "8", l: "Activités extrascolaires" },
       { v: "Bilingue", l: "Français & Anglais" },
       { v: "100%", l: "Ouverture internationale" },
     ],
     about: {
-      tag: "Présentation",
+      tag: "Notre école",
       title: "Emmanuel Private School (EPS)",
-      p1: "Située à Dakar, Emmanuel Private School est un établissement éducatif moderne qui offre un enseignement de qualité, axé sur l'excellence académique et l'ouverture internationale. L'école propose un programme riche et diversifié incluant notamment le français, l'anglais, les mathématiques, l'informatique, la lecture et des activités artistiques comme le piano.",
-      p2: "EPS se distingue par son approche bilingue (français–anglais), permettant aux élèves de développer très tôt des compétences linguistiques solides. L'établissement accueille des élèves de différentes nationalités dans un cadre propice à l'épanouissement académique et social.",
-      worldTitle: "Une école tournée vers le monde",
-      worldP: "À Emmanuel Private School, les élèves sont formés pour devenir les citoyens du monde de demain, sans frontières. Que vous soyez au Sénégal ou à l'étranger, EPS offre un cadre rassurant et adapté — un choix idéal pour les familles de la diaspora ou les expatriés souhaitant une éducation bilingue de qualité.",
-      visionTitle: "Vision & Mission",
-      visionItems: [
-        "Développer le potentiel de chaque enfant",
-        "Renforcer les acquis scolaires",
-        "Encourager la confiance en soi",
-        "Préparer efficacement les élèves à la réussite académique et professionnelle",
+      historyTitle: "Histoire de l'école",
+      p1: "Fondée à Dakar, Emmanuel Private School est née de la volonté d'offrir une éducation d'excellence, bilingue et ouverte sur le monde. Depuis sa création, l'établissement s'est engagé à accompagner chaque enfant dans son épanouissement personnel et académique, dans un cadre bienveillant et exigeant.",
+      p2: "Située à Hann Mariste, EPS accueille des élèves de la crèche au primaire. Notre devise « Educate to Empower » guide chaque journée : former des citoyens confiants, curieux et prêts à relever les défis de demain.",
+      calendarTitle: "Calendrier scolaire",
+      calendarSub: "Dates clés de l'année scolaire (à confirmer chaque rentrée).",
+      calendarItems: [
+        { period: "Rentrée scolaire", date: "Septembre" },
+        { period: "Vacances de Noël", date: "Décembre – Janvier" },
+        { period: "Vacances de Pâques", date: "Avril" },
+        { period: "Grandes vacances", date: "Juillet – Août" },
+        { period: "Réunions parents-professeurs", date: "Trimestrielles" },
+        { period: "Journées portes ouvertes", date: "Sur inscription" },
+      ],
+      scheduleTitle: "Horaires",
+      scheduleSub: "Des horaires adaptés pour favoriser l'apprentissage et le bien-être des élèves.",
+      rulesTitle: "Règlement intérieur",
+      rulesSub: "Le respect de ces règles garantit un cadre serein et propice à l'apprentissage pour tous.",
+      rulesItems: [
+        "Ponctualité et assiduité obligatoires pour tous les élèves.",
+        "Port de l'uniforme scolaire exigé en semaine.",
+        "Respect des enseignants, du personnel et des camarades.",
+        "Usage responsable du matériel scolaire et des équipements.",
+        "Interdiction du téléphone portable en classe.",
+        "Participation active aux activités pédagogiques et extrascolaires.",
+        "Collaboration des parents avec l'équipe éducative.",
       ],
       cta: "Nous contacter",
     },
     programs: {
-      tag: "Nos Programmes",
+      tag: "Programmes",
       title: "Un parcours adapté à chaque âge",
-      curriculumTitle: "Matières & activités",
-      curriculum: [
-        "Renforcement scolaire", "Français & Anglais", "Mathématiques",
-        "Informatique", "Lecture", "Piano",
-      ],
-      levelsTitle: "Niveaux / Levels",
+      levelsTitle: "Nos niveaux",
       items: [
-        { level: "Crèche", sub: "Mini Section", age: "6 mois – 3 ans", desc: "Un espace chaleureux et sécurisé où les tout-petits évoluent à leur rythme, avec un encadrement bienveillant et des activités d'éveil.", feats: ["Activités sensorielles", "Éveil musical", "Soins personnalisés", "7h30 – 17h30"] },
-        { level: "Préscolaire", sub: "Maternelle", age: "3 – 6 ans", desc: "Une pédagogie ludique et créative qui prépare l'enfant aux apprentissages fondamentaux tout en développant sa curiosité et sa sociabilité.", feats: ["Éveil à la lecture", "Arts plastiques", "Jeux éducatifs", "8h00 – 13h00"] },
-        { level: "Primaire", sub: "CI – CP – CE", age: "6 – 10 ans", desc: "Un enseignement rigoureux et bilingue qui développe les compétences académiques fondamentales en français et en anglais.", feats: ["Programme bilingue", "Sciences & Maths", "Informatique", "Lun–Mar–Jeu–Ven : 8h–16h"] },
-        { level: "Primaire", sub: "CM", age: "10 – 12 ans", desc: "Préparation avancée au collège avec renforcement scolaire, leadership et polyvalence pour réussir dans les classes supérieures.", feats: ["Renforcement scolaire", "Lecture avancée", "Piano & arts", "Mercredi : 8h–13h"] },
+        {
+          level: "Crèche", age: "6 mois – 3 ans",
+          desc: "Un espace chaleureux et sécurisé où les tout-petits évoluent à leur rythme, avec un encadrement bienveillant et des activités d'éveil.",
+          sections: [],
+          feats: ["Activités sensorielles", "Éveil musical", "Soins personnalisés", "7h30 – 17h30"],
+        },
+        {
+          level: "Maternelle", age: "3 – 6 ans",
+          desc: "Une pédagogie ludique et créative qui prépare l'enfant aux apprentissages fondamentaux tout en développant sa curiosité et sa sociabilité.",
+          sections: ["Petite section (PS)", "Moyenne section (MS)", "Grande section (GS)"],
+          feats: ["Éveil à la lecture", "Arts plastiques", "Jeux éducatifs", "8h00 – 13h00"],
+        },
+        {
+          level: "Primaire", age: "6 – 12 ans",
+          desc: "Un enseignement rigoureux et bilingue qui développe les compétences académiques fondamentales en français et en anglais.",
+          sections: ["CI", "CP", "CE1", "CE2", "CM1", "CM2"],
+          feats: ["Programme bilingue", "Sciences & Maths", "Informatique", "Lun–Ven : 8h–16h"],
+        },
       ],
     },
     activities: {
-      tag: "Activités",
+      tag: "Activités extrascolaires",
       title: "Une éducation complète et polyvalente",
-      sub: "EPS combine savoir, savoir-faire et savoir-être pour former une génération prête à relever les défis du monde moderne.",
+      sub: "Au-delà des cours, EPS propose un large éventail d'activités pour développer les talents et la confiance de chaque enfant.",
       items: [
-        { icon: "book", t: "Français & Anglais", d: "Enseignement bilingue dès le plus jeune âge pour une maîtrise linguistique solide." },
-        { icon: "calc", t: "Mathématiques", d: "Renforcement des compétences logiques et analytiques à tous les niveaux." },
+        { icon: "bookmark", t: "Lecture", d: "Club de lecture et ateliers pour développer l'amour des livres et la compréhension écrite." },
+        { icon: "music", t: "Musique", d: "Éveil musical, piano et découverte des rythmes pour éveiller la sensibilité artistique." },
         { icon: "monitor", t: "Informatique", d: "Initiation aux outils numériques et à la culture technologique moderne." },
-        { icon: "bookmark", t: "Lecture", d: "Développement de l'amour de la lecture et des compétences en compréhension." },
-        { icon: "music", t: "Piano", d: "Activités artistiques pour éveiller la créativité et la sensibilité musicale." },
-        { icon: "sparkles", t: "Renforcement scolaire", d: "Accompagnement personnalisé pour consolider les acquis et la confiance en soi." },
+        { icon: "sport", t: "Sport", d: "Activités physiques et sportives pour la santé, le travail d'équipe et le dépassement de soi." },
+        { icon: "culinary", t: "Art culinaire", d: "Ateliers cuisine pour découvrir les saveurs et développer l'autonomie." },
+        { icon: "art", t: "Art plastique", d: "Peinture, dessin et création pour exprimer la créativité de chaque enfant." },
+        { icon: "oratory", t: "Art oratoire", d: "Prise de parole en public, débats et expression orale pour gagner en assurance." },
+        { icon: "dance", t: "Danse", d: "Danse et expression corporelle pour la coordination et la joie de bouger." },
       ],
     },
     enrollment: {
-      tag: "Inscriptions",
+      tag: "Inscription",
       title: "Rejoignez Emmanuel Private School",
-      sub: "Avec EPS, votre enfant construit aujourd'hui le monde de demain ! Parents, où que vous soyez dans le monde, le Sénégal vous accueille.",
+      sub: "Avec EPS, votre enfant construit aujourd'hui le monde de demain ! Inscriptions ouvertes pour la crèche, la maternelle et le primaire.",
+      preRegTitle: "Formulaire de pré-inscription",
+      preRegDesc: "Manifestez votre intérêt pour EPS en remplissant la fiche de pré-inscription. Notre équipe vous recontactera rapidement.",
+      preRegCta: "Demander la pré-inscription",
+      regTitle: "Formulaire d'inscription",
+      regDesc: "Finalisez l'inscription de votre enfant en complétant le dossier et en fournissant les documents requis.",
+      regCta: "Demander le formulaire d'inscription",
+      feesTitle: "Frais de scolarité",
+      feesSub: "Les tarifs varient selon le niveau. Contactez-nous pour obtenir la grille tarifaire complète.",
+      fees: [
+        { level: "Crèche", amount: "Sur demande" },
+        { level: "Maternelle (PS – MS – GS)", amount: "Sur demande" },
+        { level: "Primaire (CI – CM2)", amount: "Sur demande" },
+      ],
       documentsTitle: "Documents à fournir",
       documents: [
         "Relevé de notes ou bulletin",
@@ -95,13 +136,33 @@ const T = {
         "Certificat de scolarité",
         "1 rame de papier",
       ],
-      highlights: [
-        "École bilingue (Français / Anglais)",
-        "Encadrement de qualité",
-        "Développement de la confiance en soi",
-        "Ouverte aux élèves du monde entier",
+    },
+    info: {
+      tag: "Informations",
+      title: "Informations pratiques",
+      sub: "Tout ce qu'il faut savoir pour préparer la scolarité de votre enfant à EPS.",
+      items: [
+        { icon: "map", t: "Adresse", d: "Hann Mariste N° Y/130, Dakar, Sénégal" },
+        { icon: "phone", t: "Téléphone", d: "+221 77 879 03 03" },
+        { icon: "mail", t: "Email", d: "epschooldakar@gmail.com" },
+        { icon: "globe", t: "Site web", d: "www.emmanuelprivateschool.com" },
+        { icon: "book", t: "Niveaux", d: "Crèche · Maternelle (PS, MS, GS) · Primaire (CI – CM2)" },
+        { icon: "clock", t: "Horaires", d: "Voir la section Notre école pour les horaires par niveau." },
       ],
-      cta: "Demander la fiche de renseignement",
+    },
+    recruitment: {
+      tag: "Recrutement",
+      title: "Rejoignez notre équipe",
+      sub: "EPS recherche des professionnels passionnés par l'éducation pour accompagner nos élèves vers l'excellence.",
+      offersTitle: "Offres d'emploi",
+      offers: [
+        { title: "Enseignant(e) de maternelle", type: "Temps plein", desc: "Profil expérimenté en pédagogie préscolaire, bilingue français-anglais souhaité." },
+        { title: "Enseignant(e) primaire", type: "Temps plein", desc: "Maîtrise du programme primaire sénégalais, capacité à enseigner en français et en anglais." },
+        { title: "Éducateur(trice) de crèche", type: "Temps plein", desc: "Expérience avec les tout-petits, patience, bienveillance et sens de l'organisation." },
+        { title: "Animateur(trice) extrascolaire", type: "Temps partiel", desc: "Compétences en sport, musique, art ou informatique pour animer nos activités extrascolaires." },
+      ],
+      cta: "Envoyer votre candidature",
+      ctaSub: "Envoyez votre CV et lettre de motivation à direction@emmanuelprivateschool.com",
     },
     schedule: {
       tag: "Horaires",
@@ -161,9 +222,10 @@ const T = {
   },
   en: {
     nav: {
-      home: "Home", about: "About", programs: "Programs",
-      enrollment: "Enrollment", activities: "Activities",
-      gallery: "Gallery", contact: "Contact", enroll: "Enroll Now",
+      about: "Our School", enrollment: "Enrollment", programs: "Programs",
+      info: "Information", recruitment: "Recruitment",
+      activities: "Extracurricular Activities", gallery: "Gallery", contact: "Contact",
+      enroll: "Enroll Now",
     },
     hero: {
       pre: "Educational excellence in the heart of Dakar",
@@ -180,60 +242,99 @@ const T = {
       ],
     },
     stats: [
-      { v: "4", l: "School levels" },
-      { v: "6+", l: "Subjects & activities" },
+      { v: "3", l: "School levels" },
+      { v: "8", l: "Extracurricular activities" },
       { v: "Bilingual", l: "French & English" },
       { v: "100%", l: "International outlook" },
     ],
     about: {
-      tag: "About Us",
+      tag: "Our School",
       title: "Emmanuel Private School (EPS)",
-      p1: "Located in Dakar, Emmanuel Private School is a modern educational institution offering quality teaching focused on academic excellence and international openness. The school offers a rich and diverse program including French, English, mathematics, computer science, reading, and artistic activities such as piano.",
-      p2: "EPS stands out for its bilingual approach (French–English), enabling students to develop strong language skills early on. The school welcomes students of different nationalities in an environment conducive to academic and social development.",
-      worldTitle: "A school open to the world",
-      worldP: "At Emmanuel Private School, students are trained to become tomorrow's global citizens, without borders. Whether you are in Senegal or abroad, EPS offers a reassuring and adapted setting — an ideal choice for diaspora families or expatriates seeking quality bilingual education.",
-      visionTitle: "Vision & Mission",
-      visionItems: [
-        "Develop each child's potential",
-        "Strengthen academic foundations",
-        "Encourage self-confidence",
-        "Effectively prepare students for academic and professional success",
+      historyTitle: "School History",
+      p1: "Founded in Dakar, Emmanuel Private School was born from the desire to offer excellent, bilingual, world-oriented education. Since its creation, the school has been committed to supporting each child in their personal and academic development within a caring and demanding environment.",
+      p2: "Located in Hann Mariste, EPS welcomes students from daycare through primary school. Our motto « Educate to Empower » guides every day: shaping confident, curious citizens ready to meet tomorrow's challenges.",
+      calendarTitle: "School Calendar",
+      calendarSub: "Key dates of the school year (confirmed each September).",
+      calendarItems: [
+        { period: "School reopening", date: "September" },
+        { period: "Christmas break", date: "December – January" },
+        { period: "Easter break", date: "April" },
+        { period: "Summer break", date: "July – August" },
+        { period: "Parent-teacher meetings", date: "Quarterly" },
+        { period: "Open days", date: "By registration" },
+      ],
+      scheduleTitle: "School Hours",
+      scheduleSub: "Schedules designed to promote learning and student wellbeing.",
+      rulesTitle: "School Rules",
+      rulesSub: "Following these rules ensures a calm environment conducive to learning for everyone.",
+      rulesItems: [
+        "Punctuality and attendance are required for all students.",
+        "School uniform must be worn on weekdays.",
+        "Respect for teachers, staff, and classmates.",
+        "Responsible use of school materials and equipment.",
+        "Mobile phones are not allowed in class.",
+        "Active participation in academic and extracurricular activities.",
+        "Parents must collaborate with the educational team.",
       ],
       cta: "Contact Us",
     },
     programs: {
-      tag: "Our Programs",
+      tag: "Programs",
       title: "A pathway for every age",
-      curriculumTitle: "Subjects & Activities",
-      curriculum: [
-        "Academic reinforcement", "French & English", "Mathematics",
-        "Computer Science", "Reading", "Piano",
-      ],
-      levelsTitle: "Levels",
+      levelsTitle: "Our levels",
       items: [
-        { level: "Daycare", sub: "Mini Section", age: "6 months – 3 years", desc: "A warm and secure space where toddlers develop at their own pace, with caring supervision and awakening activities.", feats: ["Sensory activities", "Musical awakening", "Personalized care", "7:30 AM – 5:30 PM"] },
-        { level: "Preschool", sub: "Kindergarten", age: "3 – 6 years", desc: "A playful and creative pedagogy that prepares children for fundamental learning while developing curiosity and social skills.", feats: ["Early literacy", "Visual arts", "Educational play", "8:00 AM – 1:00 PM"] },
-        { level: "Primary", sub: "CI – CP – CE", age: "6 – 10 years", desc: "A rigorous bilingual curriculum that develops fundamental academic skills in French and English.", feats: ["Bilingual program", "Science & Maths", "Computer Science", "Mon–Tue–Thu–Fri: 8 AM–4 PM"] },
-        { level: "Primary", sub: "CM", age: "10 – 12 years", desc: "Advanced preparation for middle school with academic reinforcement, leadership and versatility for higher-level success.", feats: ["Academic reinforcement", "Advanced reading", "Piano & arts", "Wednesday: 8 AM–1 PM"] },
+        {
+          level: "Daycare", age: "6 months – 3 years",
+          desc: "A warm and secure space where toddlers develop at their own pace, with caring supervision and awakening activities.",
+          sections: [],
+          feats: ["Sensory activities", "Musical awakening", "Personalized care", "7:30 AM – 5:30 PM"],
+        },
+        {
+          level: "Kindergarten", age: "3 – 6 years",
+          desc: "A playful and creative pedagogy that prepares children for fundamental learning while developing curiosity and social skills.",
+          sections: ["Petite section (PS)", "Moyenne section (MS)", "Grande section (GS)"],
+          feats: ["Early literacy", "Visual arts", "Educational play", "8:00 AM – 1:00 PM"],
+        },
+        {
+          level: "Primary", age: "6 – 12 years",
+          desc: "A rigorous bilingual curriculum that develops fundamental academic skills in French and English.",
+          sections: ["CI", "CP", "CE1", "CE2", "CM1", "CM2"],
+          feats: ["Bilingual program", "Science & Maths", "Computer Science", "Mon–Fri: 8 AM–4 PM"],
+        },
       ],
     },
     activities: {
-      tag: "Activities",
+      tag: "Extracurricular Activities",
       title: "A complete and versatile education",
-      sub: "EPS combines knowledge, skills, and character to form a generation ready to meet the challenges of the modern world.",
+      sub: "Beyond classes, EPS offers a wide range of activities to develop each child's talents and confidence.",
       items: [
-        { icon: "book", t: "French & English", d: "Bilingual teaching from an early age for solid language mastery." },
-        { icon: "calc", t: "Mathematics", d: "Strengthening logical and analytical skills at all levels." },
+        { icon: "bookmark", t: "Reading", d: "Reading club and workshops to develop a love of books and reading comprehension." },
+        { icon: "music", t: "Music", d: "Musical awakening, piano, and rhythm discovery to nurture artistic sensitivity." },
         { icon: "monitor", t: "Computer Science", d: "Introduction to digital tools and modern technological culture." },
-        { icon: "bookmark", t: "Reading", d: "Developing a love of reading and comprehension skills." },
-        { icon: "music", t: "Piano", d: "Artistic activities to awaken creativity and musical sensitivity." },
-        { icon: "sparkles", t: "Academic Reinforcement", d: "Personalized support to consolidate learning and self-confidence." },
+        { icon: "sport", t: "Sports", d: "Physical and sports activities for health, teamwork, and personal growth." },
+        { icon: "culinary", t: "Culinary Arts", d: "Cooking workshops to discover flavors and develop autonomy." },
+        { icon: "art", t: "Visual Arts", d: "Painting, drawing, and creation to express each child's creativity." },
+        { icon: "oratory", t: "Public Speaking", d: "Public speaking, debates, and oral expression to build confidence." },
+        { icon: "dance", t: "Dance", d: "Dance and body expression for coordination and the joy of movement." },
       ],
     },
     enrollment: {
       tag: "Enrollment",
       title: "Join Emmanuel Private School",
-      sub: "With EPS, your child is building tomorrow's world today! Parents, wherever you are in the world, Senegal welcomes you.",
+      sub: "With EPS, your child is building tomorrow's world today! Enrollment open for daycare, kindergarten, and primary school.",
+      preRegTitle: "Pre-registration Form",
+      preRegDesc: "Express your interest in EPS by completing the pre-registration form. Our team will contact you shortly.",
+      preRegCta: "Request Pre-registration",
+      regTitle: "Enrollment Form",
+      regDesc: "Complete your child's enrollment by filling out the form and providing the required documents.",
+      regCta: "Request Enrollment Form",
+      feesTitle: "Tuition Fees",
+      feesSub: "Fees vary by level. Contact us for the complete fee schedule.",
+      fees: [
+        { level: "Daycare", amount: "On request" },
+        { level: "Kindergarten (PS – MS – GS)", amount: "On request" },
+        { level: "Primary (CI – CM2)", amount: "On request" },
+      ],
       documentsTitle: "Required Documents",
       documents: [
         "Report card or academic transcript",
@@ -242,13 +343,33 @@ const T = {
         "School certificate",
         "1 ream of paper",
       ],
-      highlights: [
-        "Bilingual school (French / English)",
-        "Quality supervision",
-        "Self-confidence development",
-        "Open to students worldwide",
+    },
+    info: {
+      tag: "Information",
+      title: "Practical Information",
+      sub: "Everything you need to know to prepare your child's schooling at EPS.",
+      items: [
+        { icon: "map", t: "Address", d: "Hann Mariste N° Y/130, Dakar, Senegal" },
+        { icon: "phone", t: "Phone", d: "+221 77 879 03 03" },
+        { icon: "mail", t: "Email", d: "epschooldakar@gmail.com" },
+        { icon: "globe", t: "Website", d: "www.emmanuelprivateschool.com" },
+        { icon: "book", t: "Levels", d: "Daycare · Kindergarten (PS, MS, GS) · Primary (CI – CM2)" },
+        { icon: "clock", t: "Hours", d: "See Our School section for level-specific schedules." },
       ],
-      cta: "Request Information Form",
+    },
+    recruitment: {
+      tag: "Recruitment",
+      title: "Join Our Team",
+      sub: "EPS is looking for education professionals passionate about guiding our students toward excellence.",
+      offersTitle: "Job Openings",
+      offers: [
+        { title: "Kindergarten Teacher", type: "Full-time", desc: "Experienced in preschool pedagogy; bilingual French-English preferred." },
+        { title: "Primary School Teacher", type: "Full-time", desc: "Mastery of the Senegalese primary curriculum; ability to teach in French and English." },
+        { title: "Daycare Educator", type: "Full-time", desc: "Experience with toddlers, patience, kindness, and organizational skills." },
+        { title: "Extracurricular Activity Leader", type: "Part-time", desc: "Skills in sports, music, arts, or IT to lead our extracurricular activities." },
+      ],
+      cta: "Submit Your Application",
+      ctaSub: "Send your CV and cover letter to direction@emmanuelprivateschool.com",
     },
     schedule: {
       tag: "School Hours",
@@ -319,7 +440,6 @@ const PROGRAM_IMAGES = [
   "/photos/eps-01.jpg",
   "/photos/eps-40.jpg",
   "/photos/eps-29.jpg",
-  "/photos/eps-60.jpg",
 ];
 
 const GALLERY_IMAGES = [
@@ -356,7 +476,7 @@ function WhatsAppIcon({ size = 18 }: { size?: number }) {
 
 function NavLink({ label, href, onClick }: { label: string; href: string; onClick?: (e: React.MouseEvent) => void }) {
   return (
-    <a href={href} onClick={onClick} className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors duration-200 relative group" style={{ fontFamily: "var(--font-body)" }}>
+    <a href={href} onClick={onClick} className="text-[11px] md:text-xs lg:text-sm font-semibold text-foreground/80 hover:text-primary transition-colors duration-200 relative group whitespace-nowrap" style={{ fontFamily: "var(--font-body)" }}>
       {label}
       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300 rounded-full" />
     </a>
@@ -381,26 +501,28 @@ function SectionTitle({ children, light = false }: { children: React.ReactNode; 
   );
 }
 
-const valueIconMap: Record<string, React.FC<{ className?: string; style?: React.CSSProperties }>> = {
-  heart: ({ className, style }) => <Heart className={className} style={style} />,
-  book: ({ className, style }) => <BookOpen className={className} style={style} />,
-  users: ({ className, style }) => <Users className={className} style={style} />,
-  star: ({ className, style }) => <Star className={className} style={style} />,
-  award: ({ className, style }) => <Award className={className} style={style} />,
-  globe: ({ className, style }) => <Globe className={className} style={style} />,
-};
-
 const activityIconMap: Record<string, React.FC<{ className?: string; style?: React.CSSProperties }>> = {
-  book: ({ className, style }) => <BookOpen className={className} style={style} />,
-  calc: ({ className, style }) => <Calculator className={className} style={style} />,
-  monitor: ({ className, style }) => <Monitor className={className} style={style} />,
   bookmark: ({ className, style }) => <BookMarked className={className} style={style} />,
   music: ({ className, style }) => <Music className={className} style={style} />,
-  sparkles: ({ className, style }) => <Sparkles className={className} style={style} />,
+  monitor: ({ className, style }) => <Monitor className={className} style={style} />,
+  sport: ({ className, style }) => <Dumbbell className={className} style={style} />,
+  culinary: ({ className, style }) => <Utensils className={className} style={style} />,
+  art: ({ className, style }) => <Palette className={className} style={style} />,
+  oratory: ({ className, style }) => <Mic className={className} style={style} />,
+  dance: ({ className, style }) => <Footprints className={className} style={style} />,
 };
 
-const programIconMap = [Baby, School, BookOpen, GraduationCap];
-const programColors = ["#e20a6f", "#116fb3", "#116fb3", "#e20a6f"];
+const infoIconMap: Record<string, React.FC<{ className?: string; style?: React.CSSProperties }>> = {
+  map: ({ className, style }) => <MapPin className={className} style={style} />,
+  phone: ({ className, style }) => <Phone className={className} style={style} />,
+  mail: ({ className, style }) => <Mail className={className} style={style} />,
+  globe: ({ className, style }) => <Globe className={className} style={style} />,
+  book: ({ className, style }) => <BookOpen className={className} style={style} />,
+  clock: ({ className, style }) => <Clock className={className} style={style} />,
+};
+
+const programIconMap = [Baby, School, GraduationCap];
+const programColors = ["#e20a6f", "#116fb3", "#116fb3"];
 
 function School({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
@@ -442,6 +564,14 @@ export default function App() {
     return () => clearInterval(id);
   }, [lang, t.hero.quotes.length]);
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileOpen(false);
@@ -455,10 +585,11 @@ export default function App() {
   }
 
   const navLinks = [
-    { label: t.nav.home, id: "hero" },
     { label: t.nav.about, id: "about" },
-    { label: t.nav.programs, id: "programs" },
     { label: t.nav.enrollment, id: "enrollment" },
+    { label: t.nav.programs, id: "programs" },
+    { label: t.nav.info, id: "info" },
+    { label: t.nav.recruitment, id: "recruitment" },
     { label: t.nav.activities, id: "activities" },
     { label: t.nav.gallery, id: "gallery" },
     { label: t.nav.contact, id: "contact" },
@@ -469,8 +600,8 @@ export default function App() {
       {/* NAVBAR */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border" : "bg-white/80 backdrop-blur-sm"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-18">
-            <button onClick={() => scrollTo("hero")} className="flex items-center gap-3 group">
+          <div className="flex items-center justify-between h-16">
+            <button onClick={() => scrollTo("hero")} className="flex items-center gap-3 group flex-shrink-0">
               <EpsLogo size={48} />
               <div className="text-left hidden sm:block">
                 <div className="text-sm font-black leading-none text-primary" style={{ fontFamily: "var(--font-heading)" }}>EMMANUEL</div>
@@ -478,37 +609,37 @@ export default function App() {
               </div>
             </button>
 
-            <nav className="hidden xl:flex items-center gap-6">
-              {navLinks.map((l) => (
-                <NavLink key={l.id} label={l.label} href={`#${l.id}`} onClick={(e) => { e.preventDefault(); scrollTo(l.id); }} />
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <div className="flex items-center border border-border rounded-full overflow-hidden text-xs font-bold">
                 <button onClick={() => setLang("fr")} className={`px-3 py-1.5 transition-colors ${lang === "fr" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}>FR</button>
                 <button onClick={() => setLang("en")} className={`px-3 py-1.5 transition-colors ${lang === "en" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}>EN</button>
               </div>
 
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105" style={{ background: "#25D366" }}>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-1.5 px-3 lg:px-4 py-2 rounded-full text-xs lg:text-sm font-bold text-white transition-all hover:scale-105" style={{ background: "#25D366" }}>
                 <WhatsAppIcon size={16} />
-                <span className="hidden md:inline">{t.hero.ctaWhatsapp}</span>
+                <span className="hidden lg:inline">{t.hero.ctaWhatsapp}</span>
               </a>
 
-              <button onClick={() => scrollTo("enrollment")} className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 shadow-md" style={{ background: "#e20a6f", fontFamily: "var(--font-heading)" }}>
+              <button onClick={() => scrollTo("enrollment")} className="hidden md:inline-flex items-center gap-1.5 px-3 lg:px-4 py-2 lg:py-2.5 rounded-full text-xs lg:text-sm font-bold text-white transition-all hover:scale-105 shadow-md" style={{ background: "#e20a6f", fontFamily: "var(--font-heading)" }}>
                 {t.nav.enroll}
                 <ChevronRight size={14} />
               </button>
 
-              <button className="xl:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+              <button className="md:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
           </div>
+
+          <nav className="hidden md:flex items-center justify-center flex-wrap gap-x-4 lg:gap-x-5 gap-y-2 pb-3 pt-1 border-t border-border/40">
+            {navLinks.map((l) => (
+              <NavLink key={l.id} label={l.label} href={`#${l.id}`} onClick={(e) => { e.preventDefault(); scrollTo(l.id); }} />
+            ))}
+          </nav>
         </div>
 
         {mobileOpen && (
-          <div className="xl:hidden bg-white border-t border-border px-4 py-6 flex flex-col gap-4">
+          <div className="md:hidden bg-white border-t border-border px-4 py-6 flex flex-col gap-4">
             {navLinks.map((l) => (
               <button key={l.id} onClick={() => scrollTo(l.id)} className="text-left text-base font-semibold text-foreground hover:text-primary transition-colors py-1">{l.label}</button>
             ))}
@@ -521,7 +652,7 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section id="hero" className="pt-16 lg:pt-18 min-h-screen flex items-center relative overflow-hidden">
+      <section id="hero" className="pt-16 md:pt-[7.25rem] min-h-screen flex items-center relative overflow-hidden">
         {/* Carousel background */}
         <div className="absolute inset-0">
           {HERO_IMAGES.map((img, i) => (
@@ -537,9 +668,9 @@ export default function App() {
           <div className="absolute bottom-0 -left-24 w-96 h-96 rounded-full opacity-[0.04]" style={{ background: "#e20a6f" }} />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-0 w-full relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[calc(100vh-4.5rem)]">
-            <div className="flex flex-col justify-center lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-0 w-full relative z-10">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-12 lg:gap-20 items-center min-h-[calc(100vh-4.5rem)] md:min-h-[calc(100vh-7.25rem)]">
+            <div className="flex flex-col justify-center md:py-16 lg:py-24">
               <p className="text-sm font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#e20a6f", fontFamily: "var(--font-body)" }}>{t.hero.pre}</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] text-foreground mb-6" style={{ fontFamily: "var(--font-heading)" }}>
                 {t.hero.title}
@@ -580,7 +711,7 @@ export default function App() {
             </div>
 
             {/* Hero image with carousel dots */}
-            <div className="relative hidden lg:flex items-center justify-center py-24">
+            <div className="relative hidden md:flex items-center justify-center py-12 lg:py-24">
               <div className="relative w-full max-w-md">
                 <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/5" }}>
                   <img src={HERO_IMAGES[heroIdx]} alt="Emmanuel Private School" className="w-full h-full object-cover transition-opacity duration-1000" />
@@ -614,7 +745,7 @@ export default function App() {
       {/* STATS */}
       <section className="bg-muted py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
             {t.stats.map((s, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl lg:text-3xl font-black" style={{ color: i % 2 === 0 ? "#116fb3" : "#e20a6f", fontFamily: "var(--font-heading)" }}>{s.v}</div>
@@ -628,8 +759,8 @@ export default function App() {
       {/* ABOUT */}
       <section id="about" className="py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <div className="relative order-2 lg:order-1">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="relative order-2 md:order-1">
               <div className="relative rounded-3xl overflow-hidden shadow-xl" style={{ aspectRatio: "4/3" }}>
                 <img src="/photos/eps-31.jpg" alt="Élèves en salle informatique à Emmanuel Private School" className="w-full h-full object-cover" />
               </div>
@@ -645,31 +776,128 @@ export default function App() {
               </div>
             </div>
 
-            <div className="order-1 lg:order-2 flex flex-col gap-5">
+            <div className="order-1 md:order-2 flex flex-col gap-5">
               <Tag>{t.about.tag}</Tag>
               <SectionTitle>{t.about.title}</SectionTitle>
               <div className="w-16 h-1 rounded-full" style={{ background: "#e20a6f" }} />
+
+              <h3 id="about-history" className="text-lg font-black text-primary mt-2" style={{ fontFamily: "var(--font-heading)" }}>{t.about.historyTitle}</h3>
               <p className="text-muted-foreground leading-relaxed">{t.about.p1}</p>
               <p className="text-muted-foreground leading-relaxed">{t.about.p2}</p>
-
-              <h3 className="text-lg font-black text-primary mt-2" style={{ fontFamily: "var(--font-heading)" }}>{t.about.worldTitle}</h3>
-              <p className="text-muted-foreground leading-relaxed">{t.about.worldP}</p>
-
-              <h3 className="text-lg font-black text-primary" style={{ fontFamily: "var(--font-heading)" }}>{t.about.visionTitle}</h3>
-              <ul className="space-y-2">
-                {t.about.visionItems.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                    <ChevronRight size={16} className="text-accent mt-0.5 flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
 
               <button onClick={() => scrollTo("contact")} className="self-start flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white mt-2 hover:scale-105 transition-all shadow-md" style={{ background: "#116fb3", fontFamily: "var(--font-heading)" }}>
                 {t.about.cta}
                 <ChevronRight size={16} />
               </button>
             </div>
+          </div>
+
+          {/* Calendrier, Horaires, Règlement */}
+          <div className="mt-20 grid md:grid-cols-2 gap-8">
+            <div id="about-calendar" className="bg-muted rounded-3xl p-8 border border-border">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center"><Calendar size={18} className="text-primary" /></div>
+                <h3 className="text-lg font-black text-primary" style={{ fontFamily: "var(--font-heading)" }}>{t.about.calendarTitle}</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-5">{t.about.calendarSub}</p>
+              <ul className="space-y-3">
+                {t.about.calendarItems.map((item, i) => (
+                  <li key={i} className="flex items-center justify-between gap-4 text-sm border-b border-border/60 pb-3 last:border-0 last:pb-0">
+                    <span className="font-medium text-foreground">{item.period}</span>
+                    <span className="text-muted-foreground text-right">{item.date}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div id="about-schedule" className="bg-muted rounded-3xl p-8 border border-border">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center"><Clock size={18} className="text-primary" /></div>
+                <h3 className="text-lg font-black text-primary" style={{ fontFamily: "var(--font-heading)" }}>{t.about.scheduleTitle}</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-5">{t.about.scheduleSub}</p>
+              <div className="overflow-hidden rounded-xl border border-border">
+                <table className="w-full text-sm">
+                  <tbody>
+                    {t.schedule.rows.map((row, i) => (
+                      <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-muted/50"}>
+                        <td className="px-4 py-3 font-semibold">{row.level}</td>
+                        <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell">{row.days}</td>
+                        <td className="px-4 py-3 font-medium text-primary text-right">{row.hours}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="about-rules" className="mt-8 bg-white rounded-3xl p-8 border border-border shadow-sm">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#fff0f6" }}><ScrollText size={18} style={{ color: "#e20a6f" }} /></div>
+              <h3 className="text-lg font-black text-primary" style={{ fontFamily: "var(--font-heading)" }}>{t.about.rulesTitle}</h3>
+            </div>
+            <p className="text-sm text-muted-foreground mb-5">{t.about.rulesSub}</p>
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {t.about.rulesItems.map((item, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                  <ChevronRight size={16} className="text-accent mt-0.5 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ENROLLMENT */}
+      <section id="enrollment" className="py-24 lg:py-32" style={{ background: "#116fb3" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#f9a8d4", letterSpacing: "0.12em" }}>
+              <span className="w-4 h-px bg-pink-300" />{t.enrollment.tag}<span className="w-4 h-px bg-pink-300" />
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-white leading-tight mb-4" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.title}</h2>
+            <p className="text-white/80 leading-relaxed max-w-2xl mx-auto">{t.enrollment.sub}</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-7 border border-white/20 flex flex-col">
+              <FileText size={28} className="text-white mb-4" />
+              <h3 className="text-lg font-black text-white mb-2" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.preRegTitle}</h3>
+              <p className="text-white/80 text-sm leading-relaxed mb-6 flex-1">{t.enrollment.preRegDesc}</p>
+              <button onClick={() => scrollTo("contact")} className="w-full py-3 rounded-full text-sm font-bold text-primary bg-white hover:scale-105 transition-all">{t.enrollment.preRegCta}</button>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-7 border border-white/20 flex flex-col">
+              <FileText size={28} className="text-white mb-4" />
+              <h3 className="text-lg font-black text-white mb-2" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.regTitle}</h3>
+              <p className="text-white/80 text-sm leading-relaxed mb-6 flex-1">{t.enrollment.regDesc}</p>
+              <button onClick={() => scrollTo("contact")} className="w-full py-3 rounded-full text-sm font-bold text-primary bg-white hover:scale-105 transition-all">{t.enrollment.regCta}</button>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-7 border border-white/20">
+              <h3 className="text-lg font-black text-white mb-2" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.feesTitle}</h3>
+              <p className="text-white/80 text-sm mb-5">{t.enrollment.feesSub}</p>
+              <ul className="space-y-3">
+                {t.enrollment.fees.map((fee, i) => (
+                  <li key={i} className="flex items-center justify-between gap-3 text-sm text-white/90 border-b border-white/10 pb-3 last:border-0">
+                    <span>{fee.level}</span>
+                    <span className="font-bold text-white">{fee.amount}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 max-w-3xl mx-auto">
+            <h3 className="text-xl font-black text-white mb-6" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.documentsTitle}</h3>
+            <ul className="grid sm:grid-cols-2 gap-4">
+              {t.enrollment.documents.map((doc, i) => (
+                <li key={i} className="flex items-start gap-3 text-white/90 text-sm">
+                  <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-xs font-bold flex-shrink-0">{i + 1}</span>
+                  {doc}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -682,20 +910,8 @@ export default function App() {
             <SectionTitle>{t.programs.title}</SectionTitle>
           </div>
 
-          {/* Curriculum chips */}
-          <div className="mb-16 text-center">
-            <h3 className="text-lg font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-heading)" }}>{t.programs.curriculumTitle}</h3>
-            <div className="flex flex-wrap justify-center gap-3">
-              {t.programs.curriculum.map((c, i) => (
-                <span key={i} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white shadow-sm" style={{ background: i % 2 === 0 ? "#116fb3" : "#e20a6f" }}>
-                  ✓ {c}
-                </span>
-              ))}
-            </div>
-          </div>
-
           <h3 className="text-center text-lg font-bold text-foreground mb-8" style={{ fontFamily: "var(--font-heading)" }}>{t.programs.levelsTitle}</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {t.programs.items.map((prog, i) => {
               const Icon = programIconMap[i];
               return (
@@ -709,9 +925,20 @@ export default function App() {
                     </div>
                   </div>
                   <div className="p-5 flex flex-col flex-1">
-                    <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: programColors[i] }}>{prog.sub}</div>
                     <div className="text-xs text-muted-foreground mb-2">{prog.age}</div>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{prog.desc}</p>
+                    {prog.sections.length > 0 && (
+                      <div className="mb-4">
+                        <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: programColors[i] }}>
+                          {lang === "fr" ? "Classes" : "Grades"}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {prog.sections.map((s, j) => (
+                            <span key={j} className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background: i % 2 === 0 ? "#fff0f6" : "#eef5fb", color: programColors[i] }}>{s}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <ul className="space-y-1.5">
                       {prog.feats.map((f, j) => (
                         <li key={j} className="flex items-center gap-2 text-xs text-foreground/80">
@@ -728,51 +955,79 @@ export default function App() {
         </div>
       </section>
 
-      {/* SCHEDULE */}
-      <section id="schedule" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <Tag>{t.schedule.tag}</Tag>
-            <SectionTitle>{t.schedule.title}</SectionTitle>
-            <p className="text-muted-foreground mt-3">{t.schedule.sub}</p>
+      {/* INFO */}
+      <section id="info" className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <Tag>{t.info.tag}</Tag>
+            <SectionTitle>{t.info.title}</SectionTitle>
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">{t.info.sub}</p>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-primary text-white">
-                  <th className="px-5 py-3 text-left font-bold" style={{ fontFamily: "var(--font-heading)" }}>{lang === "fr" ? "Niveau" : "Level"}</th>
-                  <th className="px-5 py-3 text-left font-bold" style={{ fontFamily: "var(--font-heading)" }}>{lang === "fr" ? "Jours" : "Days"}</th>
-                  <th className="px-5 py-3 text-left font-bold" style={{ fontFamily: "var(--font-heading)" }}>{lang === "fr" ? "Horaires" : "Hours"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {t.schedule.rows.map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-muted/50"}>
-                    <td className="px-5 py-4 font-semibold">{row.level}</td>
-                    <td className="px-5 py-4 text-muted-foreground">{row.days}</td>
-                    <td className="px-5 py-4 font-medium text-primary">{row.hours}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {t.info.items.map((item, i) => {
+              const Icon = infoIconMap[item.icon];
+              const isBlue = i % 2 === 0;
+              return (
+                <div key={i} className="p-6 rounded-2xl border border-border hover:shadow-lg transition-all duration-300">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: isBlue ? "#eef5fb" : "#fff0f6" }}>
+                    {Icon && <Icon className="w-5 h-5" style={{ color: isBlue ? "#116fb3" : "#e20a6f" }} />}
+                  </div>
+                  <h3 className="text-sm font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>{item.t}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.d}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* RECRUITMENT */}
+      <section id="recruitment" className="py-24 lg:py-32 bg-muted">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <Tag>{t.recruitment.tag}</Tag>
+            <SectionTitle>{t.recruitment.title}</SectionTitle>
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">{t.recruitment.sub}</p>
+          </div>
+          <h3 className="text-lg font-bold text-foreground mb-6 text-center" style={{ fontFamily: "var(--font-heading)" }}>{t.recruitment.offersTitle}</h3>
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            {t.recruitment.offers.map((offer, i) => (
+              <div key={i} className="bg-white rounded-2xl p-7 border border-border hover:shadow-lg transition-all">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0"><Briefcase size={20} className="text-primary" /></div>
+                  <div>
+                    <h4 className="text-base font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-heading)" }}>{offer.title}</h4>
+                    <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full mb-2" style={{ background: "#eef5fb", color: "#116fb3" }}>{offer.type}</span>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{offer.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <a href="mailto:direction@emmanuelprivateschool.com" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white hover:scale-105 transition-all shadow-md" style={{ background: "#e20a6f", fontFamily: "var(--font-heading)" }}>
+              <Send size={16} />
+              {t.recruitment.cta}
+            </a>
+            <p className="text-sm text-muted-foreground mt-4">{t.recruitment.ctaSub}</p>
           </div>
         </div>
       </section>
 
       {/* ACTIVITIES */}
-      <section id="activities" className="py-24 lg:py-32 bg-muted">
+      <section id="activities" className="py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Tag>{t.activities.tag}</Tag>
             <SectionTitle>{t.activities.title}</SectionTitle>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">{t.activities.sub}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {t.activities.items.map((a, i) => {
               const Icon = activityIconMap[a.icon];
               const isBlue = i % 2 === 0;
               return (
-                <div key={i} className="group p-7 rounded-2xl bg-white border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                <div key={i} className="group p-7 rounded-2xl bg-muted border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: isBlue ? "#eef5fb" : "#fff0f6" }}>
                     {Icon && <Icon className="w-5 h-5" style={{ color: isBlue ? "#116fb3" : "#e20a6f" }} />}
                   </div>
@@ -785,117 +1040,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* VALUES */}
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Tag>{t.values.tag}</Tag>
-            <SectionTitle>{t.values.title}</SectionTitle>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {t.values.items.map((v, i) => {
-              const Icon = valueIconMap[v.icon];
-              const isBlue = i % 3 !== 1;
-              return (
-                <div key={i} className="group p-7 rounded-2xl border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: isBlue ? "#eef5fb" : "#fff0f6" }}>
-                    {Icon && <Icon className="w-5 h-5" style={{ color: isBlue ? "#116fb3" : "#e20a6f" }} />}
-                  </div>
-                  <h3 className="text-base font-bold text-foreground mb-2" style={{ fontFamily: "var(--font-heading)" }}>{v.t}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{v.d}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ENROLLMENT */}
-      <section id="enrollment" className="py-24 lg:py-32" style={{ background: "#116fb3" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#f9a8d4", letterSpacing: "0.12em" }}>
-                <span className="w-4 h-px bg-pink-300" />{t.enrollment.tag}<span className="w-4 h-px bg-pink-300" />
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-white leading-tight mb-4" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.title}</h2>
-              <p className="text-white/80 leading-relaxed mb-8">{t.enrollment.sub}</p>
-              <ul className="space-y-3 mb-8">
-                {t.enrollment.highlights.map((h, i) => (
-                  <li key={i} className="flex items-center gap-2 text-white/90 text-sm">
-                    <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs">✓</span>
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => scrollTo("contact")} className="flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-primary bg-white hover:scale-105 transition-all shadow-lg" style={{ fontFamily: "var(--font-heading)" }}>
-                <FileText size={16} />
-                {t.enrollment.cta}
-              </button>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-              <h3 className="text-xl font-black text-white mb-6" style={{ fontFamily: "var(--font-heading)" }}>{t.enrollment.documentsTitle}</h3>
-              <ul className="space-y-4">
-                {t.enrollment.documents.map((doc, i) => (
-                  <li key={i} className="flex items-start gap-3 text-white/90 text-sm">
-                    <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-xs font-bold flex-shrink-0">{i + 1}</span>
-                    {doc}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* GALLERY */}
-      <section id="gallery" className="py-24 lg:py-32" style={{ background: "#f4f6fa" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <Tag>{t.gallery.tag}</Tag>
-            <SectionTitle>{t.gallery.title}</SectionTitle>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {GALLERY_IMAGES.map((img, i) => (
-              <div key={i} className={`relative overflow-hidden rounded-2xl group ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3" }}>
-                <img src={img.url} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <Tag>{t.testimonials.tag}</Tag>
-            <SectionTitle>{t.testimonials.title}</SectionTitle>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {t.testimonials.items.map((item, i) => (
-              <div key={i} className="p-7 rounded-3xl border border-border flex flex-col gap-4 hover:shadow-lg transition-shadow">
-                <Quote size={28} className="text-primary/20 flex-shrink-0" />
-                <p className="text-foreground/80 text-sm leading-relaxed flex-1 italic">"{item.text}"</p>
-                <div className="flex items-center gap-3 pt-2 border-t border-border">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black text-white" style={{ background: "#e20a6f" }}>{item.name[0]}</div>
-                  <div>
-                    <div className="text-sm font-bold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>{item.name}</div>
-                    <div className="text-xs text-muted-foreground">{item.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CONTACT */}
       <section id="contact" className="py-24 lg:py-32 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
             <div>
               <Tag>{t.contact.tag}</Tag>
               <SectionTitle>{t.contact.title}</SectionTitle>
@@ -970,10 +1118,53 @@ export default function App() {
         </div>
       </section>
 
+      {/* GALLERY */}
+      <section id="gallery" className="py-24 lg:py-32" style={{ background: "#f4f6fa" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <Tag>{t.gallery.tag}</Tag>
+            <SectionTitle>{t.gallery.title}</SectionTitle>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {GALLERY_IMAGES.map((img, i) => (
+              <div key={i} className={`relative overflow-hidden rounded-2xl group ${i === 0 ? "sm:col-span-2 sm:row-span-2 md:col-span-2 md:row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3" }}>
+                <img src={img.url} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <Tag>{t.testimonials.tag}</Tag>
+            <SectionTitle>{t.testimonials.title}</SectionTitle>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {t.testimonials.items.map((item, i) => (
+              <div key={i} className="p-7 rounded-3xl border border-border flex flex-col gap-4 hover:shadow-lg transition-shadow">
+                <Quote size={28} className="text-primary/20 flex-shrink-0" />
+                <p className="text-foreground/80 text-sm leading-relaxed flex-1 italic">"{item.text}"</p>
+                <div className="flex items-center gap-3 pt-2 border-t border-border">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black text-white" style={{ background: "#e20a6f" }}>{item.name[0]}</div>
+                  <div>
+                    <div className="text-sm font-bold text-foreground" style={{ fontFamily: "var(--font-heading)" }}>{item.name}</div>
+                    <div className="text-xs text-muted-foreground">{item.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer style={{ background: "#0d1f3a" }} className="text-white py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 pb-10 border-b border-white/10">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <EpsLogo size={36} />
